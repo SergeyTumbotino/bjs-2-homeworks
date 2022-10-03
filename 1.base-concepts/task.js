@@ -2,10 +2,13 @@ function solveEquation(a, b, c) {
   "use strict";
   let arr;
   // код для задачи №1 писать здесь
-  let d = b ** 2 - 4 * a * c; // вычисление дискриминанта
-  if (d > 0) {
-    arr = [(-b + Math.sqrt(d)) / (2 * a), (-b - Math.sqrt(d)) / (2 * a)];
-  } else if (d === 0) {
+  let discriminant = b ** 2 - 4 * a * c; // вычисление дискриминанта
+  if (discriminant > 0) {
+    arr = [
+      (-b + Math.sqrt(discriminant)) / (2 * a),
+      (-b - Math.sqrt(discriminant)) / (2 * a),
+    ];
+  } else if (discriminant === 0) {
     arr = [-b / (2 * a)];
   } else {
     arr = [];
@@ -25,13 +28,11 @@ function calculateTotalMortgage(percent, contribution, amount, date) {
 
   // Проверка корректности введенных значений
   if (isNaN(percentNumber)) {
-    totalAmount = `Параметр "Процентная ставка" содержит неправильное значение ${percent}`;
+    return `Параметр "Процентная ставка" содержит неправильное значение "${percent}"`;
   } else if (isNaN(contributionNumber)) {
-    totalAmount = `Параметр "Начальный взнос" содержит неправильное значение ${contribution}`;
-    return totalAmount;
+    return `Параметр "Начальный взнос" содержит неправильное значение "${contribution}"`;
   } else if (isNaN(amountNumber)) {
-    totalAmount = `Параметр "Общая стоимость" содержит неправильное значение ${amount}`;
-    return totalAmount;
+    return `Параметр "Общая стоимость" содержит неправильное значение "${amount}"`;
   }
 
   let credit = amountNumber - contributionNumber; // Вычисление тела кредита
@@ -48,5 +49,5 @@ function calculateTotalMortgage(percent, contribution, amount, date) {
       percentNumber / 12 / 100 / ((1 + percentNumber / 12 / 100) ** month - 1)); // Вычисление ежемесячного платежа
 
   totalAmount = payment * month; // Вычисление общей суммы к выплате
-  return totalAmount.toFixed(2); // Возврат результата
+  return Number(totalAmount.toFixed(2)); // Возврат результата
 }
