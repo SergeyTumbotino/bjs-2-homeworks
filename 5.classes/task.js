@@ -68,6 +68,7 @@ class DetectiveBook extends Book {
 
 class Library {
   constructor(name) {
+    this.name = name;
     this.books = [];
   }
   // Добавление книги в библиотеку
@@ -86,12 +87,13 @@ class Library {
 
   // Выдача книги читателю
   giveBookByName(bookName) {
+    const book = this.findBookBy(name, bookName);
     const requiredBookIndex = this.books.findIndex(
       (item) => item.name === bookName
     );
     if (requiredBookIndex !== -1) {
       this.books.splice(requiredBookIndex, 1);
-      return this.books[requiredBookIndex];
+      return book;
     }
     return null;
   }
