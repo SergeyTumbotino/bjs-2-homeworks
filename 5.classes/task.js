@@ -87,7 +87,7 @@ class Library {
 
   // Выдача книги читателю
   giveBookByName(bookName) {
-    const book = this.findBookBy(name, bookName);
+    const book = this.findBookBy("name", bookName);
     const requiredBookIndex = this.books.findIndex(
       (item) => item.name === bookName
     );
@@ -96,5 +96,71 @@ class Library {
       return book;
     }
     return null;
+  }
+}
+
+// Задача №3  Журнал успеваемости
+class Student {
+  constructor(studentName, gender, age) {
+    this.studentName = studentName;
+    this.gender = gender;
+    this.age = age;
+    this.subjects = {};
+  }
+
+  setSubject(subjectName) {
+    if (subjectName in this.subjects) {
+      console.log(`Предмет ${subjectName} уже существует!`);
+      return;
+    }
+    this.subjects[subjectName] = [];
+    return;
+  }
+
+  addMark(mark, subjectName) {
+    if (this.subjects[subjectName] === undefined) {
+      console.log("Не существующий предмет");
+    } else if (
+      mark === 1 ||
+      mark === 2 ||
+      mark === 3 ||
+      mark === 4 ||
+      mark === 5
+    ) {
+      this.subjects[subjectName].push(mark);
+    } else {
+      console.log("Ошибка, оценка должна быть числом от 1 до 5");
+    }
+  }
+
+  getAverageBySubject(subjectName) {
+    let average;
+    if (subjectName in this.subjects) {
+      average =
+        this.subjects[subjectName].reduce((sum, elem) => sum + elem, 0) /
+        this.subjects[subjectName].length;
+      console.log(`Средний балл по предмету ${subjectName} ` + average);
+      return;
+    }
+    console.log("Несуществующий предмет");
+  }
+
+  getAverage() {
+    let marksSum = 0;
+    let marksCount = 0;
+    for (let subjectName in this.subjects) {
+      marksSum += this.subjects[subjectName].reduce(
+        (sum, elem) => sum + elem,
+        0
+      );
+      marksCount += this.subjects[subjectName].length;
+    }
+    console.log("Средний балл по всем предметам " + marksSum / marksCount);
+    return;
+  }
+
+  exclude(reason) {
+    delete this.subjects;
+    this.excluded = reason;
   }
 }
