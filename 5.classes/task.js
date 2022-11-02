@@ -119,14 +119,9 @@ class Student {
 
   addMark(mark, subjectName) {
     if (this.subjects[subjectName] === undefined) {
-      console.log("Не существующий предмет");
-    } else if (
-      mark === 1 ||
-      mark === 2 ||
-      mark === 3 ||
-      mark === 4 ||
-      mark === 5
-    ) {
+      this.setSubject(subjectName);
+    }
+    if (mark === 1 || mark === 2 || mark === 3 || mark === 4 || mark === 5) {
       this.subjects[subjectName].push(mark);
     } else {
       console.log("Ошибка, оценка должна быть числом от 1 до 5");
