@@ -135,7 +135,7 @@ class Student {
         this.subjects[subjectName].reduce((sum, elem) => sum + elem, 0) /
         this.subjects[subjectName].length;
       console.log(`Средний балл по предмету ${subjectName} ` + average);
-      return;
+      return average;
     }
     console.log("Несуществующий предмет");
   }
@@ -151,7 +151,7 @@ class Student {
       marksCount += this.subjects[subjectName].length;
     }
     console.log("Средний балл по всем предметам " + marksSum / marksCount);
-    return;
+    return marksSum / marksCount;
   }
 
   exclude(reason) {
