@@ -1,20 +1,65 @@
 class AlarmClock {
   constructor() {
     this.alarmCollection = [];
-    this.timerId;
+    this.timerId = null;
   }
 
-  addClock(time, callback, id) {}
+  addClock(time, callback, id) {
+    if (!id) {
+      throw new Error("Отсутствует идентификатор");
+    }
 
-  removeClock(id) {}
+    if (this.alarmCollection.some((clock) => clock.id === id)) {
+      console.error("Такой звонок уже присутствует");
+      return;
+    }
 
-  getCurrentFormattedTime() {}
+    this.alarmCollection.push({ id, callback, time });
+  }
 
-  start() {}
+  removeClock(id) {
+    const lengthBeforeRemove = this.alarmCollection.length;
+    this.alarmCollection = this.alarmCollection.filter(
+      (clock) => clock.id !== id
+    );
+    return lengthBeforeRemove !== this.alarmCollection.length;
+  }
 
-  stop() {}
+  getCurrentFormattedTime() {
+    let date = new Date();
+    return `${date.getHours()}:${date.getMinutes()}`;
+  }
 
-  printAlarms() {}
+  checkClock = (clock) => {
+    if (this.getCurrentFormattedTime === clock.time) {
+      clock.callback();
+    }
+  };
 
-  clearAlarms() {}
+  start() {
+    if (this.timerId) {
+      return;
+    }
+    this.timerId = setInterval(() => {
+      this.alarmCollection.forEach(checkClock);
+    }, 1000);
+  }
+
+  stop() {
+    if (this.timerId) {
+      clearInterval(this.timerId);
+      this.timerId = null;
+    }
+  }
+
+  printAlarms() {
+    this.alarmCollection.forEach((clock) =>
+      console.log(`id:${clock.id}, time:${clock.time}`)
+    );
+  }
+
+  clearAlarms() {
+    this.stop();
+    this.alarmCollection = [];
+  }
 }
